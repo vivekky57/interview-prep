@@ -1,6 +1,8 @@
 package org.practice.question;
 
 
+import java.util.HashMap;
+
 public class Array {
 
     public static int findMin(int[] nums) {
@@ -98,6 +100,7 @@ public class Array {
 
         return validPalindrome(sb);
     }
+
     public static boolean isSubsequence(String s, String t) {
         int low = 0;
         int n = s.length();
@@ -106,14 +109,52 @@ public class Array {
                 low++;
             }
         }
-        if(low == n){
+        if (low == n) {
             return true;
         }
-        return  false;
+        return false;
     }
+
+    public static int jump2(int pos, int[] nums, int jump) {
+        if (pos >= nums.length - 1) {
+            return jump;
+        }
+        int mini = Integer.MAX_VALUE;
+        for (int k = 1; k <= nums[pos]; k++) {
+            mini = Math.min(mini, jump2(pos + k, nums, jump + 1));
+        }
+        return mini;
+    }
+    public static int romanToInt(String s) {
+        HashMap<Character,Integer> mp = new HashMap<>();
+        mp.put('I',1);
+        mp.put('V',5);
+        mp.put('X',10);
+        mp.put('L',50);
+        mp.put('C',100);
+        mp.put('D',500);
+        mp.put('M',1000);
+        int res =0;
+        for(int i=0;i< s.length()-1;i++){
+            if(mp.get(s.charAt(i)) < mp.get(s.charAt(i+1)) ){
+                res -= mp.get(s.charAt(i));
+            }else{
+                res += mp.get(s.charAt(i));
+            }
+        }
+        return res +mp.get(s.charAt(s.length()-1));
+    }
+
     public static void main(String[] args) {
-        char[] ch = new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'};
-        System.out.println(isSubsequence("axc","ahbgdc"));
-//        print(compress(ch));
+    String s =  "MCMXCIV";
+        System.out.println(romanToInt(s));
+
+
+
+//
+//        char[] ch = new char[]{'a', 'a', 'b', 'b', 'c', 'c', 'c'};
+//        System.out.println(isSubsequence("axc", "ahbgdc"));
+////        print(compress(ch));
+//        System.out.println(jump2(0, new int[]{2, 3, 1, 1, 4}, 0));
     }
 }
